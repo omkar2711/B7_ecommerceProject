@@ -1,6 +1,8 @@
 import User from '../model/userModel.js'
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
+import { getUserIdFromRequest } from '../helper/helper.js';
+import 'dotenv/config'
 
 
 const loginService = async (req,res) => {
@@ -63,11 +65,7 @@ const registerService = async (req,res) => {
 
 const getUserProfileService = async (req,res) => {
     try {
-        //use jwt to get user id and user details
-        const token = req.headers['authorization'] || req.headers['Authorization'];
-        const trimmedToken = token.trim().replace(/^Bearer\s+/i, '');
-        const decoded = jwt.verify(trimmedToken, process.env.ACCESS_TOKEN_SECRET);
-        const userId = decoded.id;
+        const userId = getUserIdFromRequest(req);
         console.log("Decoded User ID:", userId);
         const user = await User.findById(userId).select('-password');
         if(!user){
@@ -84,10 +82,7 @@ const getUserProfileService = async (req,res) => {
 
 const updateUserService = async (req,res) => {
     try{
-       const token = req.headers['authorization'] || req.headers['Authorization'];
-        const trimmedToken = token.trim().replace(/^Bearer\s+/i, '');
-        const decoded = jwt.verify(trimmedToken, process.env.ACCESS_TOKEN_SECRET);
-        const userId = decoded.id;
+        const userId = getUserIdFromRequest(req);
         const user = await User.findById(userId);
         if(!user){
             return res.status(404).send("User not found");

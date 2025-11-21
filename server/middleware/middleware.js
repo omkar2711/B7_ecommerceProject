@@ -1,4 +1,7 @@
 import jwt from 'jsonwebtoken';
+import User from '../model/userModel.js';
+import { getUserIdFromRequest } from '../helper/helper.js';
+import 'dotenv/config'
 
 const authenticateToken = (req, res, next) => {
    const bearerToken = req.headers['authorization'] || req.headers['Authorization'];
@@ -24,13 +27,20 @@ const authenticateToken = (req, res, next) => {
 
 
 
-const authorizeRole = (allowedRoles) =>{
-    return (req, res, next) => {
-        const userRole = req.query.role ? req.query.role : req.body.role;
+const authorizeRole = async(allowedRoles, req) =>{
+    try{
+
+        const userId = getUserIdFromRequest(req);
+        const user = await User.findById(userId);
+        const userRole = user.role;
+        console.log("User Role:", userRole);
         if(!allowedRoles.includes(userRole)){
             return res.status(403).json({ message: "Forbidden: You don't have enough permission to access this resource" });
         }
-        next();
+        return true;
+    } catch(error){
+        console.error("Error in authorizeRole middleware:", error);
+        return false;
     }
 }
 export {
