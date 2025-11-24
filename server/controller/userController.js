@@ -1,29 +1,9 @@
-import { loginService, registerService , updateUserService, getUserProfileService} from '../service/userService.js';
+import { updateUserService, getUserProfileService} from '../service/userService.js';
 import { authenticateToken, authorizeRole } from '../middleware/middleware.js';
 import { validateUserBody } from '../model/userModel.js';
 
 
-const loginUser = async (req, res) => {
-    try {
-        const userLogin = await loginService(req, res);
-        res.send(userLogin);
-    }
-    catch (error) {
-        res.send(error.message);
-    }
-}
 
-const registerUser = async (req, res) => {
-    try {
-        // const userRequest = await validateUserBody(req, res, () => {});
-        const userRegister = await registerService(req, res);
-        res.send(userRegister);
-    }
-    catch (error) {
-        res.send(error.message);
-    }
-
-}
 
 const getUserProfile = async (req, res) => {
 
@@ -58,8 +38,6 @@ const updateUser = async (req, res) => {
 }
 
 export {
-    loginUser,
-    registerUser,
     getUserProfile,
     updateUser
 }

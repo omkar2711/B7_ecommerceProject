@@ -99,11 +99,12 @@ API Endpoints:
 
     4. Get Product Details: GET /api/products/:productId 
 
-    5. Add Product to Cart: POST /api/cart/add 
+    5. Add Product to Cart: POST /api/cart/add
+        - backend: Handle adding product to user's cart in the database
 
     6. Remove Product from Cart: POST /api/cart/remove 
 
-    7. Checkout: POST /api/checkout 
+    7. Checkout: POST /api/checkout : Changed to api/order/place-order
 
     8. Get User Profile: GET /api/user/profile 
 
