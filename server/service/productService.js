@@ -27,7 +27,7 @@ const createProductService= async (req,res) => {
 
 const updateProductService = async(req,res) => {
     try{
-        const productId = req.params.id;
+        const productId = req.query.id;
         const updateData = req.body;
 
         const updatedProduct = await ProductModel.findByIdAndUpdate(productId, updateData, { new: true });
@@ -44,6 +44,7 @@ const getAllProductsService = async (req,res) => {
     try{
         //fetch all products from db except deleted ones
         const products = await ProductModel.find({ isDeleted: false });
+        console.log("All Products:", products);
         return products;
     }
     catch(error){
@@ -53,11 +54,14 @@ const getAllProductsService = async (req,res) => {
 
 const getProductByIdService = async (req,res) => {
     try{
-        const productId = req.params.id;
+        //query param
+        const productId = req.query.id;
+        console.log("Fetching product with ID:", productId);
         const product = await ProductModel.findById(productId);
         if(!product){
             return res.status(404).send("Product not found");
         }
+        console.log("Product Details:", product);
         return product;
     }
     catch(error){
@@ -69,16 +73,16 @@ const getProductByIdService = async (req,res) => {
 
 const deleteProductService = async(req,res) => {
     try{
-        const productId = req.params.id;
+        const productId = req.query.id;
         //soft delete - set a flag
         //hard delete - remove from db
-        const product = ProductModel.findById(productId);
+        const product = await ProductModel.findById(productId);
         if(!product){
             return res.status(404).send("Product not found");
         }
 
         product.isDeleted = true;
-        product.deletedAt = new Date();
+        // product.deletedAt = new Date();
 
         const deletedProduct = await product.save();
         return deletedProduct;

@@ -6,7 +6,8 @@ const addToCartService = async (req, res) => {
     try{
         const userId = getUserIdFromRequest(req);
         const { productId, quantity } = req.body;
-        const product = await productModel.findById(productId);
+        //find product but not deleted products
+        const product = await productModel.findOne({ _id: productId, isDeleted: false });
         if (!product) {
             throw new Error('Product not found');
         }

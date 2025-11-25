@@ -29,7 +29,7 @@ const updateProduct = async(req,res) => {
         if (!authenicateUser) {
             return res.send("User not authenticated");
         }
-        const authorized = await authorizeRole(['admin'])(req, res);
+        const authorized = await authorizeRole(['admin'], req);
         if (!authorized) {
             return res.send("User not authorized");
         }

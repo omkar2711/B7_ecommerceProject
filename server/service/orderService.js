@@ -1,10 +1,15 @@
 import OrderModel from '../model/orderModel.js';
 import { getUserIdFromRequest } from '../helper/helper.js';
+import productModel from '../model/productModel.js';
+import cartModel from '../model/cartModel.js';
 
 const getOrderHistoryService = async(req , res) =>{
     try{
         const userId = getUserIdFromRequest(req);
         const orders = await OrderModel.find({ userId: userId });
+        if(orders.length === 0){
+            return res.status(200).send("No orders found for user");
+        }
         return orders;
     }
     catch(error){
@@ -16,13 +21,37 @@ const getOrderHistoryService = async(req , res) =>{
 const placeOrderService = async(req , res) =>{
     try{
         const userId = getUserIdFromRequest(req);
-        const { productIds, totalAmount } = req.body;
+        const { products, totalAmount } = req.body;
+
+        console.log("Placing order for User ID:", userId);
+        console.log("Order details:", { products, totalAmount });
         
         const newOrder = new OrderModel({
             userId: userId,
-            productIds: productIds,
+            products: products,
             totalAmount: totalAmount
         });
+
+        //update cart - remove ordered items from cart && decrease product stock
+        let cart = await cartModel.findOne({ userId: userId });
+        if (cart) {
+            cart.products = cart.products.filter(item => {
+                return !products.some(orderedItem => orderedItem.productId === item.productId.toString());
+            }); 
+            await cart.save();
+        }
+        
+        for (const productInOrder of products) {
+            const product = await productModel.findById(productInOrder.productId);
+            if (product) {
+                if(product.stock > 0){
+                    product.stock -= productInOrder.quantity;
+                    await product.save();
+                } else {
+                    throw new Error(`Product with ID ${productInOrder.productId} is out of stock`);
+                }
+            }
+        }
 
         await newOrder.save();
         return newOrder;

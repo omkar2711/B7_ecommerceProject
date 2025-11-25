@@ -13,14 +13,18 @@ const userSchema = new mongoose.Schema({
 
 const User = mongoose.model('User', userSchema);
 
-export default User;
 
 
-//middlware for checking the correct body of the user request
 export const validateUserBody = (req, res, next) => {
-    const { userName, email, password, profilePic, role} = req.body;
-    if (!userName || !email || !password || !role || !profilePic) {
+    const { userName, email, pass, profilePic, role} = req.body;
+    if (!userName || !email || !pass || !role || !profilePic) {
         return res.status(400).send("Missing required fields: userName, email, password, profilePic, or role");
     }
     next();
 }
+
+
+export default User;
+
+
+//middlware for checking the correct body of the user request

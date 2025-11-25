@@ -36,7 +36,7 @@ const cancelOrder = async (req, res) => {
             return res.send("User not authenticated");
         }
         const order = await cancelOrderService(req, res);
-        return order;
+        res.json(order);
     }
     catch(error){
         res.send(error.message);
