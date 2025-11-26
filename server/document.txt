@@ -77,7 +77,7 @@ UI Design:
 
     4. Shopping Cart Page 
 
-    5. Checkout Page 
+    5. Place Order Page 
 
     6. User Profile Page 
 
