@@ -5,6 +5,7 @@ import cartRouter from './routes/cartRoutes.js';
 import orderRouter from './routes/orderRoutes.js';
 import authRouter from './routes/authRoutes.js';
 import { databaseConnection } from './dbConnect/databaseConnection.js'
+import cors from 'cors';
 
 
 import 'dotenv/config'
@@ -14,7 +15,11 @@ import 'dotenv/config'
 const app = express()
 const port = 3000
 
-
+app.use(cors({
+    origin: '*', // Adjust the origin as per your client URL and port
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
 //middleware
 app.use(express.json());
 
@@ -22,6 +27,7 @@ app.use(express.json());
 databaseConnection();
     
 
+//routes
 
 app.use('/api/auth', authRouter);
 app.use('/api/user', userRouter);
