@@ -1,27 +1,40 @@
-import React , { useState , useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { fetchProductById } from '../api/fetchProduct';
 import Navbar from '../components/Navbar';
+import SimilarProducts from '../components/SimilarProducts';
+import { addToCart } from '../api/cartApi.js';
+
 
 const ProductDetails = () => {
 
     const { id } = useParams();
-    const [productDetails , setProductDetails] = useState(null);
+    const [productDetails, setProductDetails] = useState(null);
+    const [quantity, setQuantity] = useState(1);
 
     useEffect(() => {
         const getProductById = async () => {
-            try{
+            try {
                 const response = await fetchProductById(id);
                 setProductDetails(response.data);
                 console.log("Product details fetched:", response);
             }
-            catch(error){
+            catch (error) {
                 console.error("Error fetching product details:", error);
             }
         }
 
         getProductById();
     }, [id]);
+
+    const handleAddToCart = async () => {
+        try {
+            const response = await addToCart(productDetails._id, quantity);
+            console.log("Product added to cart:", response);
+        } catch (error) {
+            console.error("Error adding product to cart:", error);
+        }
+    }
 
     return (
         <>
@@ -37,8 +50,8 @@ const ProductDetails = () => {
                             </div>
                         )}
                     </div>
-     
-                    
+
+
                     {/* Right Section */}
 
                     <div>
@@ -50,13 +63,23 @@ const ProductDetails = () => {
                                     <p className='text-2xl font-semibold mb-4'>₹{productDetails.price}</p>
                                     <p className='text-lg mb-4'>Category: {productDetails.category}</p>
                                 </div>
+
+                                <div className='flex gap-4'>
+                                    <input type="number" min="1" defaultValue="1" className='border p-2 rounded-lg w-24' onChange={(e) => setQuantity(Number(e.target.value))} />
+                                </div>
+
+
                                 <div className='flex items-end mt-6 '>
-                                    <button className='bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition duration-300 '>Add to Cart</button>
+                                    <button onClick={() => handleAddToCart()} className='bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition duration-300 '>Add to Cart</button>
                                 </div>
                             </div>
                         )}
                     </div>
                 </div>
+
+
+                <SimilarProducts productDetails={productDetails ? productDetails : ''} currentProductId={id} />
+
             </div>
         </>
 

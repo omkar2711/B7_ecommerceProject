@@ -1,43 +1,12 @@
-//api to fetch the product details from the server
+
+
 import axios from 'axios';
 
 
 const backendURL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
 console.log("Backend URL in fetchProduct.js:", backendURL);
 const token = localStorage.getItem('token') || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MjU3YmE5ZDI4ZDkwZGVmMTczMTE0MiIsImlhdCI6MTc2NDMyNzA2OSwiZXhwIjoxNzY0MzMwNjY5fQ.7r1Ce1MWcUjDyJfnAWn8Bk70uq9PpsFC5EuQBQ8QYgo";
-
-
-const fetchProducts = async () => {
-    try {
-        const response = await axios.get(`${backendURL}/api/product/`, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        });
-        return response;
-    }
-    catch (error){
-        console.error("Error fetching products:", error);
-        throw error;
-    }
-}
-
-
-const fetchProductById = async (productId) => {
-    try{
-        const response = await axios.get(`${backendURL}/api/product/detail?id=${productId}`, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        });
-        return response;
-    }
-    catch(error){
-        console.error("Error fetching product by ID:", error);
-        throw error;
-    }
-}
-
+console.log("Token in cartApi.js:", token);
 
 const addToCart = async (productId, quantity) => {
     try{
@@ -73,7 +42,7 @@ const getCartItems = async () => {
 }
 
 
-const removeFromCart = async () => {
+const removeFromCart = async (productId) => {
     try{
         const response = await axios.post(`${backendURL}/api/cart/remove`, {
             productId
@@ -90,9 +59,8 @@ const removeFromCart = async () => {
     }
 }
 
+
 export {
-    fetchProducts,
-    fetchProductById,
     addToCart,
     getCartItems,
     removeFromCart
