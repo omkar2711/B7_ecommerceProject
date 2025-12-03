@@ -17,7 +17,7 @@ const Navbar = () => {
 
                 
                     <div className='flex justify-center gap-4 absolute right-8 top-1/2 transform -translate-y-1/2'>
-                        {!token ? (
+                        {token ? (
                             <>
                                 <div className='dropdown'>
                                     <NavbarDropdown />

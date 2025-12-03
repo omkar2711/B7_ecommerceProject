@@ -17,7 +17,7 @@ const User = mongoose.model('User', userSchema);
 
 export const validateUserBody = (req, res, next) => {
     const { userName, email, pass, profilePic, role} = req.body;
-    if (!userName || !email || !pass || !role || !profilePic) {
+    if (!userName || !email || !pass ) {
         return res.status(400).send("Missing required fields: userName, email, password, profilePic, or role");
     }
     next();
