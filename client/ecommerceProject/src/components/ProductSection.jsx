@@ -22,8 +22,11 @@ const ProductSection = () => {
         getProducts();
     },[]);
   return (
-    <div className=' h-full p-10 w-full flex flex-wrap justify-center items-center mt-10 rounded-3xl mx-40 mb-8 gap-8'>
-        <h1 className='w-full text-center text-4xl font-bold mb-8'> Products</h1>
+    <div className='h-full p-10 w-full flex flex-wrap justify-center items-center mt-10 rounded-3xl mx-4 md:mx-20 lg:mx-40 mb-8 gap-8 bg-white shadow-xl'>
+        <div className='w-full text-center mb-8'>
+            <h1 className='text-5xl font-extrabold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent mb-2'>Featured Products</h1>
+            <p className='text-gray-600 text-lg'>Discover our amazing collection</p>
+        </div>
         {products.map((product) => (
             <ProductCard key={product.id} product={product} />
         ))}

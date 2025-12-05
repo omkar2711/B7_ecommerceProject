@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import NavbarDropdown from './NavbarDropdown.jsx'
 
-const Navbar = () => {
+const AdminNavbar = () => {
 
     const token = localStorage.getItem("token");
     return (
@@ -10,19 +10,16 @@ const Navbar = () => {
             <nav className='navbar flex justify-center p-5 relative border-transparent bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 shadow-2xl rounded-2xl mx-4 md:mx-20 lg:mx-40 mt-6 backdrop-blur-sm'>
                 <div className='flex justify-center w-full'>
                     <div className='flex justify-center gap-8 my-auto'>
-                        <Link to="/" className='text-white font-semibold text-lg transition-all duration-300 hover:text-yellow-300 hover:scale-110 relative group'>
-                            Home
-                            <span className='absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-300 transition-all duration-300 group-hover:w-full'></span>
-                        </Link>
-                        <Link to="/products" className='text-white font-semibold text-lg transition-all duration-300 hover:text-yellow-300 hover:scale-110 relative group'>
+                        <Link to="/admin/dashboard/create-product" className='text-white font-semibold text-lg transition-all duration-300 hover:text-yellow-300 hover:scale-110 relative group'>
                             Products
                             <span className='absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-300 transition-all duration-300 group-hover:w-full'></span>
                         </Link>
-                        <Link to="/cart" className='text-white font-semibold text-lg transition-all duration-300 hover:text-yellow-300 hover:scale-110 relative group flex items-center gap-2'>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
-                            </svg>
-                            Cart
+                        <Link to="/admin/dashboard/order" className='text-white font-semibold text-lg transition-all duration-300 hover:text-yellow-300 hover:scale-110 relative group'>
+                            Orders
+                            <span className='absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-300 transition-all duration-300 group-hover:w-full'></span>
+                        </Link>
+                        <Link to="/admin/dashboard/" className='text-white font-semibold text-lg transition-all duration-300 hover:text-yellow-300 hover:scale-110 relative group flex items-center gap-2'>
+                            Users
                             <span className='absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-300 transition-all duration-300 group-hover:w-full'></span>
                         </Link>
                     </div>
@@ -51,4 +48,4 @@ const Navbar = () => {
     )
 }
 
-export default Navbar
+export default AdminNavbar

@@ -1,3 +1,11 @@
+1. Update Password in user Profile
+2. Place Order
+
+
+
+
+
+
 Model: 
 
 

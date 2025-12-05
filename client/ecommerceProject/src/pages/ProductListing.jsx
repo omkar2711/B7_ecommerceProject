@@ -44,11 +44,11 @@ const ProductListing = () => {
     <>
     <Navbar />
    <div className=' h-full p-10 w-full flex flex-wrap justify-center items-center gap-8 rounded-3xl '>
-        <div className='w-full flex justify-around text-xl font-semibold mb-8 mx-40'>
-            <button onClick={() => selectCategory('Electronics')}>Electronics</button>
-            <button onClick={() => selectCategory('Clothing')}>Clothing</button>
-            <button onClick={() => selectCategory('Books')}>Books</button>
-            <button onClick={() => selectCategory('Home')}>Home Decor</button>
+        <div className='w-full flex gap-4 justify-around text-xl font-semibold mb-8 mx-40'>
+            <button  className='underline'onClick={() => selectCategory('Electronics')}>Electronics</button>
+            <button className='underline' onClick={() => selectCategory('Clothing')}>Clothing</button>
+            <button className='underline' onClick={() => selectCategory('Books')}>Books</button>
+            <button className='underline' onClick={() => selectCategory('Home')}>Home Decor</button>
         </div>
         <h1 className='w-full text-center text-4xl font-bold mb-8'> Products</h1>
         {products.map((product) => (

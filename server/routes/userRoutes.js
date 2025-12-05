@@ -1,5 +1,5 @@
 import Router from 'express';
-import { getUserProfile, updateUser } from '../controller/userController.js'
+import { getUserProfile, updateUser , getAllUsers} from '../controller/userController.js'
 
 const userRouter = Router();
 
@@ -9,6 +9,10 @@ userRouter.get('/profile' , getUserProfile)
 
 //update user profile
 userRouter.put('/update-profile' , updateUser)
+
+//get all Users : admin
+userRouter.get('/get-all-users' , getAllUsers)
+
 
 
 export default userRouter;
